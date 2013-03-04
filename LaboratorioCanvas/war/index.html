@@ -1,0 +1,146 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Laboratorio Canvas</title>
+        <script type="text/javascript" charset="utf-8">
+            //las variables toma el tipo (int, boolean, .. ) de acuerdo al
+            //argumento que se le de.
+            var context = null, image, image2, image3;
+            var x = 0, y = 0, positionImageX = 60, positionImageY = 60;
+            var i = 0;
+            
+            function pageLoaded(){
+                var canvas = document.getElementById('testcanvas');
+                image  = document.getElementById('imagen');
+                image2 = document.getElementById('imagen2');
+                image3 = document.getElementById('imagen3');
+                context = canvas.getContext('2d'); 
+               
+                paint();
+                sound();
+                run();
+            }
+            
+            function paint(){   
+                context.fillStyle = '#3366ff';
+                context.font = '20px Verdana';
+                context.fillText('ENTRADA PRINCIPAL',200,570); 
+                
+                context.fillStyle = '#DDDDDD';
+                context.fillRect(10,600,600,120);                
+                context.fillRect(560,720,30,200);                
+                context.fillRect(300,720,130,200);
+                
+                context.fillStyle = '#000000';
+                context.fillRect(65,716,545,4);
+                
+                context.fillStyle = '#10427F';
+                context.font = '40px Verdana';
+                context.fillText('USC',136,660);
+                context.font = '20px Verdana';
+                context.fillText('UNIVERSIDAD SANTIAGO DE CALI',246,660); 
+                
+                //icono de la santiago
+                context.fillStyle = '#DDDDDD';
+                context.beginPath();
+                context.moveTo(130,620);
+                context.lineTo(130,674);
+                context.quadraticCurveTo(130,704,160,704);
+                context.lineTo(200,704);
+                context.quadraticCurveTo(230,704,230,674);
+                context.lineTo(230,620);
+                context.lineTo(130, 620);
+                context.stroke();
+                                
+                context.fillRect(10,720,290,200);
+                context.fillStyle = '#AAAAAA';
+                context.fillRect(65,720,230,173);
+                
+                //puerta
+                context.fillStyle = '#cc0F00';
+                context.fillRect(340,780,70,140);
+                
+                //ventana
+                context.fillStyle = '#3366ff';         
+                var temX = 70, temY  = 760, tem = 5;                
+                for(var i = 0; i < 24; i++){
+                    context.fillRect(temX,temY,52,18);
+                    temY += 22; 
+                    if(i === tem){
+                        temX += 56; 
+                        temY = 760;
+                        tem += 6;
+                    }
+                }      
+            }
+            
+            function run(){
+               //se ejecuta cada 2000 milisegundos
+               setTimeout(run, 2000);               
+               imageSequence();
+               
+            }
+            
+            function imageSequence(){ 
+                images();
+                count();
+                //se coloca un texto
+                context.fillText('MI UNIVERSIDAD SANTIAGO DE CALI',120,40);             
+            }
+                        
+            function images(){                
+                switch(i){
+                    case 0:
+                        //se limpia la imagen 
+                        context.clearRect(0, 0, image.width, image.height);
+                        //se dibuja la imagen
+                        context.drawImage(image, positionImageX, positionImageY); 
+                        break;
+                    case 1:
+                        context.clearRect(0, 0, image2.width, image2.height); 
+                        context.drawImage(image2, positionImageX, positionImageY);
+                        break;
+                    case 2:
+                        context.clearRect(0, 0, image3.width, image3.height); 
+                        context.drawImage(image3, positionImageX, positionImageY);
+                        break;                            
+                }
+            }
+            
+            function count(){
+                i++;
+                if(i === 3){
+                    i = 0;
+                }
+            }
+            
+            //se inicia automaticamente el sonido
+            /////////////////////////////////////////////////////
+            function sound(){
+                var sonido = document.getElementById('sonido');
+                sonido.play();                
+            }
+            /////////////////////////////////////////////////////
+           
+           
+        </script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body onload="pageLoaded();" >
+        <div>My primer canvas</div><br/>   
+        <!--se crea el elemento canvas -->
+        <canvas width="640" height="980" id="testcanvas" style="border:black 1px solid;">            
+           <!--se crea el elemento image pero no se muestran en el navegador hasta ejecutar el script -->
+           <image src = "imagen_usc.jpg" id="imagen" >
+           <image src = "imagen_usc2.jpg" id="imagen2" >
+           <image src = "imagen_usc3.jpg" id="imagen3" >
+        </canvas>   
+        <!--se crea el elemento de audio -->
+        <audio src = "sonido.mp3" controls = "controls" id="sonido">            
+        </audio>  
+    </body>
+</html>
